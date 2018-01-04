@@ -13,7 +13,7 @@ namespace FoodBook
 		public App ()
 		{
 			InitializeComponent();
-            MainPage = new Restaurant();
+            MainPage = new RestaurantPage();
         }
 
 		protected override void OnStart ()

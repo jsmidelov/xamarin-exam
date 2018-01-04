@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExamApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ using Xamarin.Forms.Xaml;
 namespace FoodBook.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Restaurant : MasterDetailPage
+    public partial class RestaurantPage : MasterDetailPage
     {
-        public Restaurant()
+        public RestaurantPage()
         {
             InitializeComponent();
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
@@ -20,7 +21,7 @@ namespace FoodBook.Views
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as RestaurantMenuItem;
+            var item = e.SelectedItem as Restaurant;
             if (item == null)
                 return;
 

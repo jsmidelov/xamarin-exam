@@ -13,9 +13,6 @@
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="App.xaml.cs">
       <DependentUpon>*.xaml</DependentUpon>
     </Compile>
-    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\MainPage.xaml.cs">
-      <DependentUpon>*.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\RestaurantMenuItem.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -23,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="ViewModels\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

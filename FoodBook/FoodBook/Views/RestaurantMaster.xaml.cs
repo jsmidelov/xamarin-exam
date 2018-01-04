@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ExamApp.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -27,17 +27,17 @@ namespace FoodBook.Views
 
         class RestaurantMasterViewModel : INotifyPropertyChanged
         {
-            public ObservableCollection<RestaurantMenuItem> MenuItems { get; set; }
-            
+            public ObservableCollection<Restaurant> MenuItems { get; set; }
+
             public RestaurantMasterViewModel()
             {
-                MenuItems = new ObservableCollection<RestaurantMenuItem>(new[]
+                MenuItems = new ObservableCollection<Restaurant>(new[]
                 {
-                    new RestaurantMenuItem { Id = 0, Title = "Page 1" },
-                    new RestaurantMenuItem { Id = 1, Title = "Page 2" },
-                    new RestaurantMenuItem { Id = 2, Title = "Page 3" },
-                    new RestaurantMenuItem { Id = 3, Title = "Page 4" },
-                    new RestaurantMenuItem { Id = 4, Title = "Page 5" },
+                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Best Place" },
+                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Almost Best Place" },
+                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Pretty Decent Place" },
+                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Okey Place" },
+                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Quick Place" },
                 });
             }
             

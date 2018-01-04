@@ -4,6 +4,23 @@
              x:Class="FoodBook.Views.RestaurantDetail"
              Title="Detail">
   <StackLayout Padding="10">
-    <Label Text="This is a detail page. To get the 'triple' line icon on each platform add a icon to each platform and update the 'Master' page with an Icon that references it."/>
-  </StackLayout>
+        <Label Text="This is a detail page. To get the 'triple' line icon on each platform add a icon to each platform and update the 'Master' page with an Icon that references it."/>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Call (if open)" IsEnabled="True" />
+            <Button Text="Edit" />
+        </StackLayout>
+        <ListView ItemsSource="{Binding Menu}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout
+                            Orientation="Horizontal">
+                            <Label Text="{Binding Name}" />
+                            <Stepper Minimum="0" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>
