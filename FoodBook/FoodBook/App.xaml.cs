@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoodBook.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,8 @@ namespace FoodBook
 		public App ()
 		{
 			InitializeComponent();
-
-			MainPage = new FoodBook.MainPage();
-		}
+            MainPage = new Restaurant();
+        }
 
 		protected override void OnStart ()
 		{
