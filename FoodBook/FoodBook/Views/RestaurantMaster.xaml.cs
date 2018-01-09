@@ -23,6 +23,8 @@ namespace FoodBook.Views
 
             BindingContext = new RestaurantMasterViewModel();
             ListView = MenuItemsListView;
+            
+            AddButton.Clicked += (s,e) => AddRestaurant();
         }
 
         class RestaurantMasterViewModel : INotifyPropertyChanged
@@ -31,9 +33,14 @@ namespace FoodBook.Views
 
             public RestaurantMasterViewModel()
             {
+                ObservableCollection<Dish> TestMenu = new ObservableCollection<Dish>
+                {
+                    new Dish {Category = "Pasta",Id = 1, Name = "TestPasta",Price=79 },
+                    new Dish {Category = "Pizza",Id = 1, Name = "TestPizza",Price=79 }
+                };
                 MenuItems = new ObservableCollection<Restaurant>(new[]
                 {
-                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Best Place" },
+                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Best Place", Menu=TestMenu },
                     new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Almost Best Place" },
                     new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Pretty Decent Place" },
                     new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Okey Place" },
@@ -51,6 +58,11 @@ namespace FoodBook.Views
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
             #endregion
+        }
+        //Method handler for AddRestaurant
+        public async void AddRestaurant()
+        {
+            await Navigation.PushAsync(new RestaurantForm());
         }
     }
 }

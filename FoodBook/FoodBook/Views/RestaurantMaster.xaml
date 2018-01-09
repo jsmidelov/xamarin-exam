@@ -4,7 +4,8 @@
              x:Class="FoodBook.Views.RestaurantMaster"
              Title="Master">
   <StackLayout>
-    <ListView x:Name="MenuItemsListView"
+        <Button x:Name="AddButton" Text="Add" Clicked="AddRestaurant" />
+        <ListView x:Name="MenuItemsListView"
               SeparatorVisibility="None"
               HasUnevenRows="true"
               ItemsSource="{Binding MenuItems}">

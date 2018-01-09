@@ -3,24 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodBook.Views.RestaurantDetail"
              Title="Detail">
-  <StackLayout Padding="10">
-        <Label Text="This is a detail page. To get the 'triple' line icon on each platform add a icon to each platform and update the 'Master' page with an Icon that references it."/>
+    <StackLayout Padding="10">
+        <!--<Label Text="This is a detail page. To get the 'triple' line icon on each platform add a icon to each platform and update the 'Master' page with an Icon that references it."/>-->
         <StackLayout Orientation="Horizontal">
-            <Button Text="Call (if open)" IsEnabled="True" />
-            <Button Text="Edit" />
+            <Button x:Name="CallButton" Text="Call" IsEnabled="{Binding IsOpen}" Clicked="CallRestaurant"/>
+            <Button x:Name="EditButton" Text="Edit" Clicked="EditRestaurant" />
         </StackLayout>
-        <ListView ItemsSource="{Binding Menu}">
+        <StackLayout
+            Orientation="Horizontal">
+            <Label Text="This is an example pizza" />
+            <Entry Keyboard="Numeric" WidthRequest="40" />
+            <Button x:Name="WikiButton" WidthRequest="50" HeightRequest="30" Text="?" Clicked="CallWikipedia"/>
+        </StackLayout>
+        <!--<ListView x:Name="List" ItemsSource="{Binding Menu}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout
                             Orientation="Horizontal">
                             <Label Text="{Binding Name}" />
-                            <Stepper Minimum="0" />
+                            <Entry Keyboard="Numeric" WidthRequest="40" />
+                            <Button x:Name="WikiButton" WidthRequest="50" HeightRequest="30" Text="?" Clicked="CallWikipedia"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView>-->
     </StackLayout>
 </ContentPage>
