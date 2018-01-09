@@ -6,6 +6,7 @@ using Microsoft.AppCenter.Crashes;
 
 using Xamarin.Forms;
 using FoodBook.Services;
+using FoodBook.Models;
 
 namespace FoodBook
 {
@@ -19,7 +20,13 @@ namespace FoodBook
             var rootPage = new RestaurantPage();
             var navPage = new NavigationPage(rootPage);
             MainPage = navPage;
-            Repository = new Repository("data.db");
+            //Xamarin.Forms.Device.OnPlatform();
+            
+
+            string dbPath = DependencyService.Get<IFileHelper>().GetLocalFilePath("data.db");
+            //string dbPath = FileAccessHelper.GetLocalFilePath("data.db");
+            Repository = new Repository(dbPath);
+            //Repository = new Repository("data.db");
         }
 
 		protected override void OnStart ()

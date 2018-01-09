@@ -21,7 +21,7 @@ namespace FoodBook.Services
         public string Results { get; set; }
         public Repository(string dbPath)
         {
-            Instance = new Repository("database.db");
+            //Instance = new Repository("database.db");
             connection = new SQLiteAsyncConnection(dbPath);
             
             connection.CreateTableAsync<Restaurant>().Wait();
