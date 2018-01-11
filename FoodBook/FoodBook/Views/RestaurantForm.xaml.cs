@@ -54,7 +54,7 @@ namespace FoodBook.Views
             catch (Exception e)
             {
                 result = $"Could not navigate back due to error: {e.Message}";
-                throw;
+                await DisplayAlert("Exception",result,"Oh No!");
             }
         }
 
@@ -76,7 +76,6 @@ namespace FoodBook.Views
             catch (Exception e)
             {
                 result = $"Could not update due to error: {e.Message}";
-                throw;
             }
             
             return result;
@@ -102,7 +101,6 @@ namespace FoodBook.Views
             catch (Exception e)
             {
                 result = $"Could not add due to error: {e.Message}";
-                throw;
             }
             return result;
         }
