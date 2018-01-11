@@ -7,9 +7,10 @@
         {
             string keyToStart = "\"extract\":";
             int startIndex = Content.IndexOf(keyToStart) + keyToStart.Length;
-            int endIndex = Content.LastIndexOf("}}}}");
+            int endIndex = Content.Substring(startIndex).IndexOf(@"\n");
+            //int endIndex = Content.LastIndexOf("}}}}");
             Extract = Content
-                .Substring(startIndex,endIndex-startIndex).Replace("<p>","")
+                .Substring(startIndex,endIndex).Replace("<p>","")
                 .Replace("</p>", "")
                 .Replace("<b>", "")
                 .Replace("</b>", "")
