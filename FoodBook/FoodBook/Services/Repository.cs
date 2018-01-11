@@ -8,28 +8,19 @@ namespace FoodBook.Services
 {
     public class Repository
     {
-        public Repository Instance {
-            get {
-                if (Instance==null)
-                {
-                    new Repository("database.db");
-                }
-                return Instance;
-            }
-            private set { Instance = value; } }
         private readonly SQLiteAsyncConnection connection;
         public string Results { get; set; }
+
         public Repository(string dbPath)
         {
-            //Instance = new Repository("database.db");
             connection = new SQLiteAsyncConnection(dbPath);
             
-            connection.CreateTableAsync<Restaurant>().Wait();
-            connection.CreateTableAsync<Dish>().Wait();
-            connection.CreateTableAsync<OpenHours>().Wait();
+            connection.CreateTableAsync<Restaurant>();
+            connection.CreateTableAsync<Dish>();
+            connection.CreateTableAsync<OpenHours>();
         }
 
-        public void Create(Restaurant item)
+        public async Task Create(Restaurant item)
         {
             try
             {
@@ -38,7 +29,7 @@ namespace FoodBook.Services
                 if (item.Title.Length > 250)
                     throw new Exception("Title must not exceed 250 characters");
 
-                var linesAdded = connection.InsertAsync(item);
+                var linesAdded = await connection.InsertAsync(item);
                 Results = $"{linesAdded} copy of {item.Title} created";
             }
             catch (Exception e)
@@ -47,14 +38,32 @@ namespace FoodBook.Services
             }
         }
 
-        public void Delete(Restaurant item)
+        public async Task Update(Restaurant item)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(item.Title))
+                    throw new Exception("Title required");
+                if (item.Title.Length > 250)
+                    throw new Exception("Title must not exceed 250 characters");
+
+                var linesAdded = await connection.UpdateAsync(item);
+                Results = $"{linesAdded} copy of {item.Title} updated";
+            }
+            catch (Exception e)
+            {
+                Results = $"Failed to update {item.Title ?? "untitled item"}. {e.Message}";
+            }
+        }
+
+        public async Task Delete(Restaurant item)
         {
             try
             {
                 if (connection.GetAsync<Restaurant>(item) == null)
                     throw new Exception("Item does not exist");
                 
-                connection.DeleteAsync(item);
+                await connection.DeleteAsync(item);
             }
             catch (Exception e)
             {
@@ -76,7 +85,7 @@ namespace FoodBook.Services
             }
         }
 
-        public void Create(Dish item)
+        public async Task Create(Dish item)
         {
             try
             {
@@ -85,7 +94,7 @@ namespace FoodBook.Services
                 if (item.Name.Length > 250)
                     throw new Exception("Title must not exceed 250 characters");
 
-                var linesAdded = connection.InsertAsync(item);
+                var linesAdded = await connection.InsertAsync(item);
                 Results = $"{linesAdded} copy of {item.Name} created";
             }
             catch (Exception e)
@@ -94,14 +103,14 @@ namespace FoodBook.Services
             }
         }
 
-        public void Delete(Dish item)
+        public async Task Delete(Dish item)
         {
             try
             {
                 if (connection.GetAsync<Restaurant>(item) == null)
                     throw new Exception("Item does not exist");
 
-                connection.DeleteAsync(item);
+                await connection.DeleteAsync(item);
             }
             catch (Exception e)
             {
@@ -122,5 +131,37 @@ namespace FoodBook.Services
                 return new List<Dish>();
             }
         }
+
+        public async Task Create(List<OpenHours> list)
+        {
+            try
+            {
+                foreach (var item in list)
+                {
+                    if (string.IsNullOrEmpty(item.RestaurantId))
+                        throw new Exception($"All Open Hours must have a RestaurantId string, which {item.Weekday} lacks");
+                }
+
+                var linesAdded = await connection.InsertAllAsync(list);
+                Results = $"{linesAdded} OpenHours created";
+            }
+            catch (Exception e)
+            {
+                Results = $"Failed to add OpenHours. {e.Message}";
+            }
+        }
+        public async Task<List<OpenHours>> GetCurrentOpenHours(Restaurant restaurant)
+        {
+            try
+            {
+                return await connection.Table<OpenHours>().Where(x => x.RestaurantId == restaurant.Id).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Results = $"Failed to retrieve data. {e.Message}";
+                return new List<OpenHours>();
+            }
+        }
+        // Intentionally leaving out Update and Delete for now, as editing opening hours is not a feature I have time to add before deadline.
     }
 }

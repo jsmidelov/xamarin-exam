@@ -14,19 +14,13 @@ namespace FoodBook
 	{
         public static HttpClient Http { get; set; } = new HttpClient();
         public static Repository Repository { get; set; }
-        public App ()
+        public App (string dbPath)
 		{
 			InitializeComponent();
             var rootPage = new RestaurantPage();
             var navPage = new NavigationPage(rootPage);
             MainPage = navPage;
-            //Xamarin.Forms.Device.OnPlatform();
-            
-
-            string dbPath = DependencyService.Get<IFileHelper>().GetLocalFilePath("data.db");
-            //string dbPath = FileAccessHelper.GetLocalFilePath("data.db");
             Repository = new Repository(dbPath);
-            //Repository = new Repository("data.db");
         }
 
 		protected override void OnStart ()

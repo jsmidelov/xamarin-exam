@@ -1,11 +1,7 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using FoodBook.Droid.Helpers;
 
 namespace FoodBook.Droid
 {
@@ -20,7 +16,8 @@ namespace FoodBook.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App());
+            string dbPath = FileAccessHelper.GetLocalFilePath("data.db3");
+            LoadApplication(new App(dbPath));
         }
     }
 }

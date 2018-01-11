@@ -1,5 +1,6 @@
 ﻿using ExamApp.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -29,18 +30,16 @@ namespace FoodBook.Views
 
         class RestaurantMasterViewModel : INotifyPropertyChanged
         {
-            public ObservableCollection<Restaurant> MenuItems { get; set; }
+            public List<Restaurant> MenuItems { get; set; }
 
             public RestaurantMasterViewModel()
             {
-                ObservableCollection<Dish> TestMenu = new ObservableCollection<Dish>
+                // TODO: Debug Create/Update-methods, then uncomment
+                //SetProperties(); // Intentionally non-awaited
+
+                MenuItems = new List<Restaurant>(new[]
                 {
-                    new Dish {Category = "Pasta",Id = 1, Name = "TestPasta",Price=79 },
-                    new Dish {Category = "Pizza",Id = 1, Name = "TestPizza",Price=79 }
-                };
-                MenuItems = new ObservableCollection<Restaurant>(new[]
-                {
-                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Best Place", Menu=TestMenu },
+                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Best Place" },
                     new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Almost Best Place" },
                     new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Pretty Decent Place" },
                     new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Okey Place" },
@@ -48,6 +47,11 @@ namespace FoodBook.Views
                 });
             }
             
+            private async Task SetProperties()
+            {
+                MenuItems = await App.Repository.GetAllRestaurants();
+            }
+
             #region INotifyPropertyChanged Implementation
             public event PropertyChangedEventHandler PropertyChanged;
             void OnPropertyChanged([CallerMemberName] string propertyName = "")

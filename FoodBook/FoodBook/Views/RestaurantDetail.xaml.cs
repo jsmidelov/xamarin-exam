@@ -1,6 +1,7 @@
 ﻿using ExamApp.Models;
 using FoodBook.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using Xamarin.Forms;
@@ -29,11 +30,17 @@ namespace FoodBook.Views
         }
 
         public Restaurant Item { get; set; }
-        public ObservableCollection<Dish> Menu { get; set; }
+        public List<Dish> Menu { get; set; }
         public RestaurantDetail(Restaurant item)
         {
             Item = item;
             Menu = item.Menu;
+            Menu = new List<Dish>
+            {
+                new Dish {Category = "Pasta",Id = 1, Name = "TestPasta",Price=79, WikiName="Pasta" },
+                new Dish {Category = "Pizza",Id = 1, Name = "TestPizza",Price=79, WikiName="Pizza" }
+            };
+
             InitializeComponent();
             //List.BindingContext = Menu;
             RegisterEvents();
@@ -41,6 +48,17 @@ namespace FoodBook.Views
         // Need parameter in XAML in order to comment this out
         public RestaurantDetail()
         {
+            // Using Id = 0 as a DataTrigger for XAML to disable Edit for non-existing restaurants
+            Item = new Restaurant
+            {
+                Id = "0"
+            };
+            Menu = new List<Dish>
+            {
+                new Dish {Category = "Pasta",Id = 1, Name = "TestPasta",Price=79, WikiName="Pasta" },
+                new Dish {Category = "Pizza",Id = 1, Name = "TestPizza",Price=79, WikiName="Pizza" }
+            };
+
             InitializeComponent();
             RegisterEvents();
         }
@@ -50,10 +68,12 @@ namespace FoodBook.Views
             CallButton.Clicked += (s, e) => CallRestaurant();
             EditButton.Clicked += (s, e) => EditRestaurant();
             WikiButton.Clicked += (s, e) => CallWikipedia();
+            //List.ItemTapped += (s,e) => CallWikipedia(e);
         }
 
-        private async void CallWikipedia()
+        private async void CallWikipedia() // ItemTappedEventArgs e
         {
+            // TODO: Find proper way to call wikipedia based on which button was presed
             var responseMessage = await App.Http.GetAsync("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&redirects=true&titles=Pizza");
             WikipediaResult result = new WikipediaResult(await responseMessage.Content.ReadAsStringAsync());
             await DisplayAlert("About this dish",result.Extract,"OK");

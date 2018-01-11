@@ -7,7 +7,13 @@
         <!--<Label Text="This is a detail page. To get the 'triple' line icon on each platform add a icon to each platform and update the 'Master' page with an Icon that references it."/>-->
         <StackLayout Orientation="Horizontal">
             <Button x:Name="CallButton" Text="Call" IsEnabled="{Binding IsOpen}" Clicked="CallRestaurant"/>
-            <Button x:Name="EditButton" Text="Edit" Clicked="EditRestaurant" />
+            <Button x:Name="EditButton" Text="Edit" Clicked="EditRestaurant">
+                <!--<Button.Triggers>
+                    <DataTrigger TargetType="Button" Binding="{Binding Source={Item.Id},Path=Text}" Value="">
+                        <Setter Property="IsEnabled" Value="false" />
+                    </DataTrigger>
+                </Button.Triggers>-->
+            </Button>
         </StackLayout>
         <StackLayout
             Orientation="Horizontal">
@@ -18,11 +24,12 @@
         <!--<ListView x:Name="List" ItemsSource="{Binding Menu}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
+                    <ViewCell x:Name="DishCell" Tapped="CallWikipedia">
                         <StackLayout
                             Orientation="Horizontal">
                             <Label Text="{Binding Name}" />
                             <Entry Keyboard="Numeric" WidthRequest="40" />
+                            <Entry IsVisible="False" x:Name="WikiName" Text="{Binding WikiName}" />
                             <Button x:Name="WikiButton" WidthRequest="50" HeightRequest="30" Text="?" Clicked="CallWikipedia"/>
                         </StackLayout>
                     </ViewCell>

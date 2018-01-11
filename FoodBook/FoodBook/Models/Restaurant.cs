@@ -24,6 +24,6 @@ namespace ExamApp.Models
         [Ignore]
         public List<OpenHours> OpenedHours { get; set; }
         [Ignore]
-        public ObservableCollection<Dish> Menu { get; set; }
+        public List<Dish> Menu { get; set; }
     }
 }

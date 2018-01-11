@@ -4,13 +4,13 @@ using System;
 [assembly: Xamarin.Forms.Dependency(typeof(IFileHelper))]
 namespace FoodBook.iOS.Helpers
 {    
-    public class FileAccessHelper: IFileHelper
+    public class FileAccessHelper//: IFileHelper
     {
         public FileAccessHelper()
         {
         }
 
-        public string GetLocalFilePath(string filename)
+        public static string GetLocalFilePath(string filename)
         {
             string docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string libFolder = System.IO.Path.Combine(docFolder, "..", "Library", "Databases");

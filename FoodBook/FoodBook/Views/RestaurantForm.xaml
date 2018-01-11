@@ -5,11 +5,11 @@
   <ContentPage.Content>
         <StackLayout>
             <Label Text="Restaurant name" />
-            <Entry x:Name="Name" Placeholder="E.g. 'McBurger Kong two blocks down street'" Text="{Binding Title, Mode=TwoWay}" />
+            <Entry x:Name="Name" Placeholder="E.g. 'McBurger Kong two blocks down street'" Keyboard="Text" Text="{Binding Title, Mode=TwoWay}" />
             <Label Text="Phone number" />
-            <Entry x:Name="PhoneNumber" Placeholder="E.g. '1-555-123 123'" />
+            <Entry x:Name="PhoneNumber" Placeholder="E.g. '1-555-123 123'" Keyboard="Numeric" />
             <Label Text="Description" />
-            <Entry x:Name="Description" Placeholder="This note is for your own help, should the name not make it clear" />
+            <Entry x:Name="Description" Placeholder="This note is for your own help, should the name not make it clear" Keyboard="Text" />
             <!-- How do I make a TwoWay bound list for adding meny options? It's not essential to core functionality, but it's UX-important -->
             <Button x:Name="SaveButton" Text="Save" Clicked="SaveRestaurant" />
         </StackLayout>

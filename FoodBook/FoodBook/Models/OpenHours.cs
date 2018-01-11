@@ -8,7 +8,7 @@ namespace ExamApp.Models
         [PrimaryKey, AutoIncrement]
         public int OpenHoursId { get; set; }
         [NotNull]
-        public int RestaurantId { get; set; }
+        public string RestaurantId { get; set; }
         public DayOfWeek Weekday { get; set; }
         public DateTime Opens { get; set; }
         public DateTime Closes { get; set; }

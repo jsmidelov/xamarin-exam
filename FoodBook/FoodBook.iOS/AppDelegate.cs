@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿using FoodBook.iOS.Helpers;
 using Foundation;
 using UIKit;
 
@@ -22,8 +19,9 @@ namespace FoodBook.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            Xamarin.Forms.Forms.Init();
+            string dbPath = FileAccessHelper.GetLocalFilePath("data.db3");
+            LoadApplication(new App(dbPath));
 
             return base.FinishedLaunching(app, options);
         }

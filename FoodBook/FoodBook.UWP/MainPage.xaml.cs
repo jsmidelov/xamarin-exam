@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿using FoodBook.UWP.Helpers;
 
 namespace FoodBook.UWP
 {
@@ -19,9 +6,9 @@ namespace FoodBook.UWP
     {
         public MainPage()
         {
-            this.InitializeComponent();
-
-            LoadApplication(new FoodBook.App());
+            InitializeComponent();
+            string dbPath = FileAccessHelper.GetLocalFilePath("data.db3");
+            LoadApplication(new FoodBook.App(dbPath));
         }
     }
 }
