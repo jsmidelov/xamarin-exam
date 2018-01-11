@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static FoodBook.Views.RestaurantMaster;
 
 namespace FoodBook.Views
 {
@@ -39,20 +40,27 @@ namespace FoodBook.Views
 
         private async void SaveRestaurant()
         {
+            string result = "";
             if (isNew)
+                result = await SaveNewRestaurant(result);
+            else            
+                result = await UpdateRestaurant(result);
+
+            try
             {
-                Restaurant newRestaurant = new Restaurant
-                {
-                    Id = new Guid().ToString(),
-                    Title = Name.Text,
-                    PhoneNumber = PhoneNumber.Text,
-                    Description = Description.Text,
-                };
-                // Create the added restaurant
-                await App.Repository.Create(newRestaurant);
-                await SaveOpenHours(newRestaurant.Id);
+                await DisplayAlert("Result", result, "OK");
+                await Navigation.PopAsync();
             }
-            else
+            catch (Exception e)
+            {
+                result = $"Could not navigate back due to error: {e.Message}";
+                throw;
+            }
+        }
+
+        private async Task<string> UpdateRestaurant(string result)
+        {
+            try
             {
                 // TODO remove ?? operators once DataBinding is confirmed as working
                 Restaurant restaurant = new Restaurant
@@ -63,9 +71,40 @@ namespace FoodBook.Views
                     Description = Description.Text ?? Item.Description,
                 };
                 // Update the edited restaurant
-                await App.Repository.Update(restaurant);
+                result = await App.Repository.Update(restaurant);
             }
-            await Navigation.PopAsync();
+            catch (Exception e)
+            {
+                result = $"Could not update due to error: {e.Message}";
+                throw;
+            }
+            
+            return result;
+        }
+
+        private async Task<string> SaveNewRestaurant(string result)
+        {
+            try
+            {
+                Restaurant newRestaurant = new Restaurant
+                {
+                    Id = new Guid().ToString(),
+                    Title = Name.Text,
+                    PhoneNumber = PhoneNumber.Text,
+                    Description = Description.Text,
+                };
+
+                result = await App.Repository.Create(newRestaurant);
+                // TODO: OpenHours feature disabled until core features work
+                //await SaveOpenHours(newRestaurant.Id);
+                RestaurantMasterViewModel.MenuItems.Add(newRestaurant);
+            }
+            catch (Exception e)
+            {
+                result = $"Could not add due to error: {e.Message}";
+                throw;
+            }
+            return result;
         }
 
         private async Task SaveOpenHours(string newRestaurantId)

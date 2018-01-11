@@ -14,13 +14,19 @@ namespace FoodBook.Services
         public Repository(string dbPath)
         {
             connection = new SQLiteAsyncConnection(dbPath);
-            
-            connection.CreateTableAsync<Restaurant>();
-            connection.CreateTableAsync<Dish>();
-            connection.CreateTableAsync<OpenHours>();
+            try
+            {
+                connection.CreateTableAsync<Restaurant>().Wait();
+                connection.CreateTableAsync<Dish>().Wait();
+                connection.CreateTableAsync<OpenHours>().Wait();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
-        public async Task Create(Restaurant item)
+        public async Task<string> Create(Restaurant item)
         {
             try
             {
@@ -36,9 +42,10 @@ namespace FoodBook.Services
             {
                 Results = $"Failed to add {item.Title ?? "untitled item"}. {e.Message}";
             }
+            return Results;
         }
 
-        public async Task Update(Restaurant item)
+        public async Task<string> Update(Restaurant item)
         {
             try
             {
@@ -54,6 +61,7 @@ namespace FoodBook.Services
             {
                 Results = $"Failed to update {item.Title ?? "untitled item"}. {e.Message}";
             }
+            return Results;
         }
 
         public async Task Delete(Restaurant item)

@@ -6,7 +6,8 @@
     <StackLayout Padding="10">
         <!--<Label Text="This is a detail page. To get the 'triple' line icon on each platform add a icon to each platform and update the 'Master' page with an Icon that references it."/>-->
         <StackLayout Orientation="Horizontal">
-            <Button x:Name="CallButton" Text="Call" IsEnabled="{Binding IsOpen}" Clicked="CallRestaurant"/>
+            <Button x:Name="CallButton" Text="Call" Clicked="CallRestaurant"/>
+            <!--IsEnabled="{Binding IsOpen}"-->
             <Button x:Name="EditButton" Text="Edit" Clicked="EditRestaurant">
                 <!--<Button.Triggers>
                     <DataTrigger TargetType="Button" Binding="{Binding Source={Item.Id},Path=Text}" Value="">

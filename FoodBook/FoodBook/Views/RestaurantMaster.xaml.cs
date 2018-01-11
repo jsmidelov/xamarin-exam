@@ -28,28 +28,30 @@ namespace FoodBook.Views
             AddButton.Clicked += (s,e) => AddRestaurant();
         }
 
-        class RestaurantMasterViewModel : INotifyPropertyChanged
+        internal class RestaurantMasterViewModel : INotifyPropertyChanged
         {
-            public List<Restaurant> MenuItems { get; set; }
+            public static ObservableCollection<Restaurant> MenuItems { get; set; }
 
             public RestaurantMasterViewModel()
             {
                 // TODO: Debug Create/Update-methods, then uncomment
-                //SetProperties(); // Intentionally non-awaited
+                SetProperties(); // Intentionally non-awaited
 
-                MenuItems = new List<Restaurant>(new[]
-                {
-                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Best Place" },
-                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Almost Best Place" },
-                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Pretty Decent Place" },
-                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Okey Place" },
-                    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Quick Place" },
-                });
+                //MenuItems = new List<Restaurant>(new[]
+                //{
+                //    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Best Place" },
+                //    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Almost Best Place" },
+                //    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Pretty Decent Place" },
+                //    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Okey Place" },
+                //    new Restaurant { Id = Guid.NewGuid().ToString(), Title = "Quick Place" },
+                //});
             }
             
             private async Task SetProperties()
             {
-                MenuItems = await App.Repository.GetAllRestaurants();
+                List<Restaurant> list = await App.Repository.GetAllRestaurants();
+                MenuItems = new ObservableCollection<Restaurant>(list);
+                //MenuItems = await App.Repository.GetAllRestaurants();
             }
 
             #region INotifyPropertyChanged Implementation

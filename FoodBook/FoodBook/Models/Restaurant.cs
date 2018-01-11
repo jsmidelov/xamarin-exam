@@ -14,6 +14,8 @@ namespace ExamApp.Models
             TargetType = typeof(RestaurantDetail);
         }
         [PrimaryKey, AutoIncrement]
+        public int DbId { get; set; }
+        [NotNull]
         public string Id { get; set; }
         [NotNull, MaxLength(250)]
         public string Title { get; set; }
